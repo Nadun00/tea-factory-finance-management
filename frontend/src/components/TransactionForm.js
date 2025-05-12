@@ -3,6 +3,7 @@ import axios from 'axios';
 import './TransactionForm.css'; // Import the CSS file
 
 
+
 const TransactionForm = ({ fetchTransactions }) => {
   const [formData, setFormData] = useState({
     date: '',
@@ -44,44 +45,33 @@ const TransactionForm = ({ fetchTransactions }) => {
   return (
     <div className="form-container">
      <h2>Add New Transaction</h2>
-    <form onSubmit={handleSubmit}>
-      <input
-        type="date"
-        name="date"
-        value={formData.date}
-        onChange={handleChange}
-        required
-      />
-      <select name="type" value={formData.type} onChange={handleChange}>
-        <option value="sale">Sale</option>
-        <option value="expense">Expense</option>
-      </select>
-      <input
-        type="number"
-        name="amount"
-        value={formData.amount}
-        onChange={handleChange}
-        placeholder="Amount"
-        required
-      />
-      <input
-        type="text"
-        name="description"
-        value={formData.description}
-        onChange={handleChange}
-        placeholder="Description"
-        required
-      />
-      <input
-        type="text"
-        name="category"
-        value={formData.category}
-        onChange={handleChange}
-        placeholder="Category"
-        required
-      />
-      <button type="submit">Submit</button>
+     <form onSubmit={handleSubmit} className="transaction-form">
+      <div className="form-group">
+        <label>Date</label>
+        <input type="date" name="date" value={formData.date} onChange={handleChange} required />
+      </div>
+      <div className="form-group">
+        <label>Type</label>
+        <select name="type" value={formData.type} onChange={handleChange}>
+          <option value="sale">Sale</option>
+          <option value="expense">Expense</option>
+        </select>
+      </div>
+      <div className="form-group">
+        <label>Amount</label>
+        <input type="number" name="amount" value={formData.amount} onChange={handleChange} placeholder="Amount" required />
+      </div>
+      <div className="form-group">
+        <label>Description</label>
+        <input type="text" name="description" value={formData.description} onChange={handleChange} placeholder="Description" required />
+      </div>
+      <div className="form-group">
+        <label>Category</label>
+        <input type="text" name="category" value={formData.category} onChange={handleChange} placeholder="Category" required />
+      </div>
+      <button type="submit">Add Transaction</button>
     </form>
+
     </div>
   );
 };

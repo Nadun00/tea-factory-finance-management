@@ -1,6 +1,7 @@
 //import React from 'react';
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { jsPDF } from 'jspdf';  // Import jsPDF library
 import './TransactionList.css'; // Import the CSS file
 
 
@@ -39,9 +40,42 @@ const TransactionList = ({ transactions, fetchTransactions }) => {
     }
   };
 
+  // Function to generate and download the PDF
+  const handleDownloadPDF = () => {
+    const doc = new jsPDF();
+
+    // Add a title to the PDF
+    doc.text('Transaction Details', 20, 10);
+
+    // Prepare data for the PDF
+    let yPosition = 20; // Initial y position for text
+
+    // Table headers
+    doc.text('Date', 20, yPosition + 10);
+    doc.text('Type', 60, yPosition + 10);
+    doc.text('Amount', 100, yPosition + 10);
+    doc.text('Description', 140, yPosition + 10);
+    doc.text('Category', 180, yPosition + 10);
+
+    // Add table data
+    transactions.forEach((transaction, index) => {
+      yPosition += 10; // Move to the next row
+
+      doc.text(new Date(transaction.date).toLocaleDateString(), 20, yPosition);
+      doc.text(transaction.type, 60, yPosition);
+      doc.text(transaction.amount.toString(), 100, yPosition);
+      doc.text(transaction.description, 140, yPosition);
+      doc.text(transaction.category, 180, yPosition);
+    });
+
+    // Save the PDF
+    doc.save('transaction-details.pdf');
+  };
+
   return (
     <div className="table-container">
       <h2>Transaction List</h2>
+        <button onClick={handleDownloadPDF} style={{ marginBottom: '10px' }}>Download PDF</button>
       <table>
         <thead>
           <tr>
